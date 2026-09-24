@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PersonaCommerce - MBTI Decision Assessment</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Fredoka', sans-serif;
+        background-color: #fff9f9;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col text-gray-800">
+    <!-- ================= DYNAMIC NAVBAR ================= -->
+    <nav
+      id="navbar"
+      class="hidden bg-white/85 backdrop-blur-md border-b border-pink-100 px-8 py-3 flex justify-between items-center sticky top-0 z-50"
+    >
+      <div class="flex items-center gap-2">
+        <img
+          src="https://i.ibb.co/bjz3NNP8/Image-19-9-2569-BE-at-00-41.jpg"
+          alt="Logo"
+          class="h-8 w-auto object-contain"
+        />
+        <div>
+          <span class="text-sm font-bold text-[#D95383] block leading-tight"
+            >PersonaCommerce</span
+          >
+          <span class="text-[10px] text-gray-400 tracking-wider"
+            >DECISION ASSESSMENT</span
+          >
+        </div>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <button
+          onclick="navigate('home')"
+          class="text-sm font-medium hover:text-[#D95383] transition"
+        >
+          Home
+        </button>
+        <button
+          onclick="navigate('learn')"
+          class="text-sm font-medium hover:text-[#D95383] transition"
+        >
+          Learn MBTI
+        </button>
+        <button
+          onclick="navigate('test')"
+          class="text-sm font-medium hover:text-[#D95383] transition"
+        >
+          Take Test
+        </button>
+        <button
+          onclick="navigate('result')"
+          class="text-sm font-medium hover:text-[#D95383] transition"
+        >
+          My Results
+        </button>
+        <button
+          id="navHrBtn"
+          onclick="navigate('hr')"
+          class="hidden text-sm font-bold text-[#D95383] hover:underline transition"
+        >
+          HR Dashboard
+        </button>
+        <button
+          id="navAdminBtn"
+          onclick="navigate('admin')"
+          class="hidden text-sm font-bold text-[#D95383] hover:underline transition"
+        >
+          System Admin
+        </button>
+      </div>
+
+      <!-- User Profile Dropdown -->
+      <div class="relative">
+        <button
+          onclick="toggleDropdown()"
+          class="flex items-center gap-3 bg-white border border-pink-100 px-3 py-1.5 rounded-full shadow-sm hover:shadow transition"
+        >
+          <div
+            id="userAvatar"
+            class="w-8 h-8 rounded-full bg-[#D95383] text-white flex items-center justify-center text-xs font-bold"
+          >
+            SS
+          </div>
+          <div class="text-left">
+            <span id="navUserName" class="text-xs font-bold block text-gray-800"
+              >Supasri Seekane</span
+            >
+            <span id="navUserRoleBadge" class="text-[10px] text-gray-400 block"
+              >HR Manager</span
+            >
+          </div>
+          <span class="text-xs text-gray-400">▼</span>
+        </button>
+
+        <div
+          id="userDropdown"
+          class="hidden absolute right-0 mt-2 w-48 bg-white border border-pink-100 rounded-2xl shadow-xl py-2 z-50"
+        >
+          <button
+            onclick="logout()"
+            class="w-full text-left px-4 py-2 text-xs text-red-500 hover:bg-pink-50 flex items-center gap-2 font-medium"
+          >
+            🚪 Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ================= CONTAINER VIEWS ================= -->
+    <main class="flex-grow flex items-center justify-center p-4">
+      <!-- 1. LOGIN / REGISTER VIEW -->
+      <div
+        id="authContainer"
+        class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col lg:flex-row border border-pink-100 my-8"
+      >
+        <div
+          class="w-full lg:w-1/2 bg-[#FFF0F2] flex flex-col items-center justify-center p-8 lg:p-12 text-center"
+        >
+          <div class="max-w-md">
+            <div class="bg-white p-3 rounded-3xl shadow-xl mb-8">
+              <img
+                src="https://i.ibb.co/XrLprDw3/Image-23-9-2569-BE-at-00-32.jpg"
+                alt="Hero Illustration"
+                class="rounded-2xl w-full h-72 object-cover"
+              />
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-3">
+              Discover Your True Leadership Style in E-Commerce
+            </h2>
+            <p class="text-sm text-gray-600">
+              A playful MBTI-based assessment that reveals how you make
+              decisions and where you shine on an e-commerce team.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="w-full lg:w-1/2 bg-white flex flex-col items-center justify-center p-8 lg:p-12"
+        >
+          <div class="w-full max-w-md">
+            <div class="text-center mb-6">
+              <img
+                src="https://i.ibb.co/bjz3NNP8/Image-19-9-2569-BE-at-00-41.jpg"
+                alt="Logo"
+                class="h-10 w-auto mx-auto mb-2"
+              />
+              <h1 class="text-xl font-bold text-gray-900">
+                E-Commerce Decision Maker
+              </h1>
+              <p class="text-xs text-gray-400">
+                ITCS454 - Mahidol University ICT
+              </p>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginView">
+              <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-semibold text-gray-700 mb-1"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    id="loginEmail"
+                    required
+                    placeholder="you@mahidol.ac.th"
+                    class="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D95383] outline-none"
+                  />
+                  <p
+                    id="loginEmailErr"
+                    class="text-xs text-red-500 mt-1 hidden"
+                  >
+                    Must use a valid @mahidol.ac.th email
+                  </p>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-gray-700 mb-1"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    id="loginPass"
+                    required
+                    placeholder="Enter password"
+                    class="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D95383] outline-none"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-gray-700 mb-1"
+                    >Login As Role</label
+                  >
+                  <select
+                    id="loginRoleSelect"
+                    class="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D95383] outline-none text-gray-700"
+                  >
+                    <option value="Candidate">Assessment Candidate</option>
+                    <option value="HR Manager">HR Manager / Team Lead</option>
+                  </select>
+                </div>
+                <button
+                  type="submit"
+                  class="w-full py-3 bg-gradient-to-r from-[#D95383] to-[#F29C79] text-white font-bold rounded-xl shadow-md hover:opacity-95 transition"
+                >
+                  Sign In
+                </button>
+              </form>
+              <p class="text-center text-xs text-gray-500 mt-6">
+                Don't have an account?
+                <button
+                  onclick="toggleAuthMode('register')"
+                  class="text-[#D95383] font-semibold underline"
+                >
+                  Register Now
+                </button>
+              </p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerView" class="hidden">
+              <form onsubmit="handleRegister(event)" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-semibold text-gray-700 mb-1"
+                    >First & Last Name</label
+                  >
+                  <input
+                    type="text"
+                    id="regName"
+                    required
+                    placeholder="Supasri Seekane"
+                    class="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D95383] outline-none"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-gray-700 mb-1"
+                    >Email (@mahidol.ac.th)</label
+                  >
+                  <input
+                    type="email"
+                    id="regEmail"
+                    required
+                    placeholder="supasri@mahidol.ac.th"
+                    class="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D95383] outline-none"
+                  />
+                  <p id="regEmailErr" class="text-xs text-red-500 mt-1 hidden">
+                    Must use a valid @mahidol.ac.th email
+                  </p>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-gray-700 mb-1"
+                    >Password (Min 8 chars, 1 uppercase, 1 number)</label
+                  >
+                  <input
+                    type="password"
+                    id="regPass"
+                    required
+                    placeholder="Strong password"
+                    class="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D95383] outline-none"
+                  />
+                  <p id="regPassErr" class="text-xs text-red-500 mt-1 hidden">
+                    Password must include uppercase & number
+                  </p>
+                </div>
+                <button
+                  type="submit"
+                  class="w-full py-3 bg-gradient-to-r from-[#D95383] to-[#F29C79] text-white font-bold rounded-xl shadow-md hover:opacity-95 transition"
+                >
+                  Create Account
+                </button>
+              </form>
+              <p class="text-center text-xs text-gray-500 mt-6">
+                Already have an account?
+                <button
+                  onclick="toggleAuthMode('login')"
+                  class="text-[#D95383] font-semibold underline"
+                >
+                  Sign In
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. HOME VIEW -->
+      <div id="homeView" class="hidden w-full max-w-5xl py-6">
+        <h1 id="welcomeHeading" class="text-2xl font-bold mb-6 text-gray-800">
+          Hi, Supasri Seekane 👋
+        </h1>
+        <div
+          class="bg-gradient-to-r from-[#D95383] to-[#F29C79] rounded-3xl p-8 text-white text-center shadow-lg relative overflow-hidden mb-8"
+        >
+          <h2 class="text-3xl font-bold mb-2">
+            Find your decision-making style that's right in your style
+          </h2>
+          <p class="text-sm opacity-90 max-w-2xl mx-auto mb-6">
+            This assessment evaluates your personality and decision-making style
+            (MBTI) to identify your aptitudes and the most suitable role for
+            working with our E-commerce team.
+          </p>
+          <button
+            onclick="navigate('test')"
+            class="bg-white text-[#D95383] font-bold px-8 py-3 rounded-full shadow-md hover:bg-gray-100 transition"
+          >
+            START TEST
+          </button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100"
+          >
+            <div
+              class="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center text-[#D95383] font-bold mb-4"
+            >
+              ⏱️
+            </div>
+            <h3 class="font-bold text-gray-800 mb-1">Time</h3>
+            <p class="text-xs text-gray-500">
+              Take only 5-10 minutes to complete the assessment.
+            </p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100"
+          >
+            <div
+              class="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center text-[#D95383] font-bold mb-4"
+            >
+              📊
+            </div>
+            <h3 class="font-bold text-gray-800 mb-1">Format</h3>
+            <p class="text-xs text-gray-500">
+              Questions divided into 4 dimensions (12 questions total).
+            </p>
+          </div>
+          <div
+            class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100"
+          >
+            <div
+              class="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center text-[#D95383] font-bold mb-4"
+            >
+              💡
+            </div>
+            <h3 class="font-bold text-gray-800 mb-1">Tips</h3>
+            <p class="text-xs text-gray-500">
+              There is no right or wrong answer. Select the option that best
+              describes your work habits.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. LEARN MBTI VIEW -->
+      <div id="learnView" class="hidden w-full max-w-5xl py-6 space-y-8">
+        <div class="text-center max-w-2xl mx-auto">
+          <span
+            class="px-3 py-1 bg-pink-100 text-[#D95383] text-xs font-bold rounded-full"
+            >KNOWLEDGE HUB</span
+          >
+          <h1 class="text-3xl font-bold text-gray-900 mt-2 mb-3">
+            Understanding MBTI in E-Commerce
+          </h1>
+          <p class="text-sm text-gray-600">
+            Discover why personality frameworks matter in digital business and
+            how knowing your type optimizes team synergy and decision-making.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div
+            class="bg-white p-8 rounded-3xl shadow-sm border border-pink-100"
+          >
+            <div
+              class="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center text-[#D95383] font-bold text-xl mb-4"
+            >
+              🧠
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">What is MBTI?</h3>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              The Myers-Briggs Type Indicator (MBTI) is a psychological
+              assessment tool that categorizes individuals into 16 distinct
+              personality types based on four core psychological dimensions:
+              Energy, Information, Decisions, and Lifestyle.
+            </p>
+          </div>
+          <div
+            class="bg-white p-8 rounded-3xl shadow-sm border border-pink-100"
+          >
+            <div
+              class="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center text-[#D95383] font-bold text-xl mb-4"
+            >
+              💼
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">
+              Why It Matters for E-Commerce
+            </h3>
+            <p class="text-xs text-gray-600 leading-relaxed">
+              In fast-paced e-commerce operations, team members make dozens of
+              critical choices daily—from inventory planning to customer
+              service. Matching personal traits with specific business roles
+              dramatically improves efficiency, minimizes conflicts, and
+              maximizes revenue.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-pink-100">
+          <h3 class="text-xl font-bold text-gray-900 mb-6 text-center">
+            The 4 Core Dimensions
+          </h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="p-4 bg-pink-50/50 rounded-2xl border border-pink-100">
+              <span class="text-xs font-bold text-[#D95383] block mb-1"
+                >DIMENSION 1</span
+              >
+              <h4 class="font-bold text-gray-900 mb-2">Energy (E / I)</h4>
+              <p class="text-xs text-gray-600">
+                How you direct and receive energy: Extraversion (interactive
+                team floors) vs. Introversion (focused independent work).
+              </p>
+            </div>
+            <div class="p-4 bg-pink-50/50 rounded-2xl border border-pink-100">
+              <span class="text-xs font-bold text-[#D95383] block mb-1"
+                >DIMENSION 2</span
+              >
+              <h4 class="font-bold text-gray-900 mb-2">Information (S / N)</h4>
+              <p class="text-xs text-gray-600">
+                How you absorb data: Sensing (grounded in historical sales data
+                and facts) vs. Intuition (focusing on future trends and creative
+                ideas).
+              </p>
+            </div>
+            <div class="p-4 bg-pink-50/50 rounded-2xl border border-pink-100">
+              <span class="text-xs font-bold text-[#D95383] block mb-1"
+                >DIMENSION 3</span
+              >
+              <h4 class="font-bold text-gray-900 mb-2">Decisions (T / F)</h4>
+              <p class="text-xs text-gray-600">
+                How you evaluate choices: Thinking (analytical metrics and ROI)
+                vs. Feeling (team morale and customer empathy).
+              </p>
+            </div>
+            <div class="p-4 bg-pink-50/50 rounded-2xl border border-pink-100">
+              <span class="text-xs font-bold text-[#D95383] block mb-1"
+                >DIMENSION 4</span
+              >
+              <h4 class="font-bold text-gray-900 mb-2">Lifestyle (J / P)</h4>
+              <p class="text-xs text-gray-600">
+                How you approach structure: Judging (structured planning and
+                strict milestones) vs. Perceiving (flexible and spontaneous
+                adaptation).
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. TEST VIEW (12 Questions) -->
+      <div
+        id="testView"
+        class="hidden w-full max-w-3xl bg-white rounded-3xl shadow-xl p-8 border border-pink-100 my-6"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <span id="questionCountText" class="text-xs font-bold text-gray-400"
+            >Question 1 of 12</span
+          >
+          <span
+            id="progressPercentText"
+            class="text-xs font-bold text-[#D95383]"
+            >8%</span
+          >
+        </div>
+        <div class="w-full bg-pink-100 h-2 rounded-full mb-8 overflow-hidden">
+          <div
+            id="progressBar"
+            class="bg-gradient-to-r from-[#D95383] to-[#F29C79] h-full w-[8%] transition-all duration-300"
+          ></div>
+        </div>
+
+        <div class="mb-6">
+          <span
+            id="questionDimensionBadge"
+            class="px-3 py-1 bg-pink-100 text-[#D95383] text-xs font-bold rounded-full"
+            >PART 1 - ENERGY (E/I)</span
+          >
+          <h2 id="questionTitle" class="text-xl font-bold text-gray-800 mt-3">
+            How do you prefer to spend your workday?
+          </h2>
+        </div>
+
+        <div class="space-y-4 mb-8">
+          <button
+            onclick="selectOption('A')"
+            id="optionABtn"
+            class="w-full text-left p-4 rounded-2xl border-2 border-gray-100 hover:border-[#D95383] transition flex items-center justify-between"
+          >
+            <span id="optionAText" class="text-sm font-medium text-gray-700"
+              >Talk to customers on the floor</span
+            >
+            <span
+              class="w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center text-xs text-gray-400 font-bold"
+              >A</span
+            >
+          </button>
+          <button
+            onclick="selectOption('B')"
+            id="optionBBtn"
+            class="w-full text-left p-4 rounded-2xl border-2 border-gray-100 hover:border-[#D95383] transition flex items-center justify-between"
+          >
+            <span id="optionBText" class="text-sm font-medium text-gray-700"
+              >Work quietly on my own</span
+            >
+            <span
+              class="w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center text-xs text-gray-400 font-bold"
+              >B</span
+            >
+          </button>
+        </div>
+
+        <div class="flex justify-between">
+          <button
+            onclick="prevQuestion()"
+            id="prevBtn"
+            class="px-6 py-2.5 rounded-xl border border-gray-200 text-xs font-bold text-gray-500 hover:bg-gray-50 transition"
+          >
+            ← Previous
+          </button>
+          <button
+            onclick="nextQuestion()"
+            id="nextBtn"
+            class="px-8 py-2.5 rounded-xl bg-gradient-to-r from-[#D95383] to-[#F29C79] text-white text-xs font-bold shadow-md hover:opacity-95 transition"
+          >
+            Next →
+          </button>
+        </div>
+      </div>
+
+      <!-- 5. RESULT VIEW -->
+      <div id="resultView" class="hidden w-full max-w-5xl space-y-6 py-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-800">
+            Your Assessment Result
+          </h1>
+          <p class="text-xs text-gray-500">
+            Based on your responses across all four dimensions.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Hero Card with Dynamic Character Avatar Sprite -->
+          <div
+            id="resultHeroCard"
+            class="lg:col-span-7 rounded-3xl p-8 text-white shadow-lg flex flex-col items-center justify-center text-center relative overflow-hidden transition-colors duration-500 bg-[#F4C753]"
+          >
+            <div
+              class="w-32 h-32 rounded-full bg-white/30 backdrop-blur-md p-2 mb-4 shadow-inner flex items-center justify-center overflow-hidden"
+            >
+              <div
+                id="resultCharacterAvatar"
+                class="w-full h-full rounded-full bg-cover bg-no-repeat bg-center"
+              ></div>
+            </div>
+            <h2
+              id="resultMbtiTitle"
+              class="text-4xl font-black tracking-wider mb-1"
+            >
+              ISFP
+            </h2>
+            <h3
+              id="resultSubtitle"
+              class="text-lg font-semibold opacity-90 mb-3"
+            >
+              The Adventurer
+            </h3>
+            <div
+              class="flex flex-wrap gap-2 justify-center text-xs font-medium opacity-90"
+            >
+              <span id="trait1">Introverted</span> •
+              <span id="trait2">Sensing</span> •
+              <span id="trait3">Feeling</span> •
+              <span id="trait4">Perceiving</span>
+            </div>
+          </div>
+
+          <!-- Role & Characteristics -->
+          <div class="lg:col-span-5 space-y-6">
+            <div
+              class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100"
+            >
+              <span
+                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1"
+                >Decision-Maker Style</span
+              >
+              <h3
+                id="resultRoleTitle"
+                class="text-lg font-bold text-gray-800 mb-2"
+              >
+                The Adventurer
+              </h3>
+              <div
+                class="inline-flex items-center gap-1.5 px-3 py-1 bg-pink-50 text-[#D95383] rounded-full text-xs font-semibold mb-3"
+              >
+                <span
+                  >💼 Recommended Role:
+                  <span id="resultRoleName">Visual Merchandiser</span></span
+                >
+              </div>
+              <p
+                id="resultRoleDesc"
+                class="text-xs text-gray-600 leading-relaxed"
+              >
+                Creative and flexible with an eye for beauty.
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100"
+            >
+              <h3 class="font-bold text-sm text-gray-800 mb-3">
+                Key Characteristics
+              </h3>
+              <div
+                id="keyCharacteristicsContainer"
+                class="flex flex-wrap gap-2"
+              >
+                <span
+                  class="px-3 py-1 bg-pink-50 text-[#D95383] rounded-full text-xs font-medium"
+                  >Artistic</span
+                >
+                <span
+                  class="px-3 py-1 bg-pink-50 text-[#D95383] rounded-full text-xs font-medium"
+                  >Gentle</span
+                >
+                <span
+                  class="px-3 py-1 bg-pink-50 text-[#D95383] rounded-full text-xs font-medium"
+                  >Flexible</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Breakdown & Info -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div
+            class="lg:col-span-7 bg-white p-6 rounded-3xl shadow-sm border border-pink-100"
+          >
+            <h3 class="font-bold text-sm text-gray-800 mb-4">
+              Dimension Score Breakdown
+            </h3>
+            <div class="space-y-4 text-xs">
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span id="scoreEText">E - Extraversion 0%</span
+                  ><span id="scoreIText">100% Introversion - I</span>
+                </div>
+                <div
+                  class="w-full bg-pink-50 h-2 rounded-full overflow-hidden relative"
+                >
+                  <div
+                    id="barEI"
+                    class="absolute top-0 bottom-0 bg-[#D95383] transition-all duration-300"
+                  ></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span id="scoreSText">S - Sensing 100%</span
+                  ><span id="scoreNText">0% Intuition - N</span>
+                </div>
+                <div
+                  class="w-full bg-pink-50 h-2 rounded-full overflow-hidden relative"
+                >
+                  <div
+                    id="barSN"
+                    class="absolute top-0 bottom-0 bg-[#D95383] transition-all duration-300"
+                  ></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span id="scoreTText">T - Thinking 0%</span
+                  ><span id="scoreFText">100% Feeling - F</span>
+                </div>
+                <div
+                  class="w-full bg-pink-50 h-2 rounded-full overflow-hidden relative"
+                >
+                  <div
+                    id="barTF"
+                    class="absolute top-0 bottom-0 bg-[#D95383] transition-all duration-300"
+                  ></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span id="scoreJText">J - Judging 0%</span
+                  ><span id="scorePText">100% Perceiving - P</span>
+                </div>
+                <div
+                  class="w-full bg-pink-50 h-2 rounded-full overflow-hidden relative"
+                >
+                  <div
+                    id="barJP"
+                    class="absolute top-0 bottom-0 bg-[#D95383] transition-all duration-300"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="lg:col-span-5 bg-white p-6 rounded-3xl shadow-sm border border-pink-100 flex flex-col justify-between"
+          >
+            <div>
+              <h3 class="font-bold text-sm text-gray-800 mb-4">
+                Test Information
+              </h3>
+              <div class="grid grid-cols-2 gap-4 text-xs">
+                <div>
+                  <span class="text-gray-400 block mb-1">📅 Date</span>
+                  <span id="testDate" class="font-semibold text-gray-700"
+                    >September 23, 2026</span
+                  >
+                </div>
+                <div>
+                  <span class="text-gray-400 block mb-1"
+                    >📋 Questions answered</span
+                  >
+                  <span class="font-semibold text-gray-700">12 of 12</span>
+                </div>
+                <div>
+                  <span class="text-gray-400 block mb-1"
+                    >⏱️ Completion time</span
+                  >
+                  <span class="font-semibold text-gray-700">35 sec</span>
+                </div>
+                <div>
+                  <span class="text-gray-400 block mb-1">📌 Status</span>
+                  <span class="font-semibold text-green-600">Completed</span>
+                </div>
+              </div>
+            </div>
+            <button
+              onclick="navigate('home')"
+              class="mt-6 w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl text-xs transition"
+            >
+              Back to Dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.5 VIEW FULL REPORT MODAL / VIEW -->
+      <div
+        id="fullReportView"
+        class="hidden w-full max-w-4xl bg-white rounded-3xl shadow-xl p-8 border border-pink-100 my-6 space-y-6"
+      >
+        <div
+          class="flex justify-between items-center border-b border-gray-100 pb-4"
+        >
+          <div>
+            <span
+              class="px-3 py-1 bg-pink-100 text-[#D95383] text-xs font-bold rounded-full"
+              >EMPLOYEE REPORT</span
+            >
+            <h1
+              id="reportEmpName"
+              class="text-2xl font-bold text-gray-900 mt-1"
+            >
+              Employee Name
+            </h1>
+            <p id="reportEmpMeta" class="text-xs text-gray-500">
+              Department: E-Commerce | Test Date: 23 Sep 2026
+            </p>
+          </div>
+          <button
+            onclick="navigate('hr')"
+            class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-xl transition"
+          >
+            ← Back to HR Dashboard
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div
+            class="bg-[#FFF0F2] p-6 rounded-2xl flex flex-col items-center justify-center text-center"
+          >
+            <div
+              id="reportEmpAvatar"
+              class="w-24 h-24 rounded-full bg-cover bg-no-repeat bg-center mb-3 shadow"
+            ></div>
+            <h2 id="reportEmpMbti" class="text-3xl font-black text-[#D95383]">
+              ENTJ
+            </h2>
+            <h3 id="reportEmpStyle" class="text-base font-bold text-gray-800">
+              The Commander
+            </h3>
+          </div>
+          <div
+            class="bg-white p-6 rounded-2xl border border-pink-100 flex flex-col justify-between space-y-4"
+          >
+            <div>
+              <span
+                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1"
+                >Recommended Role</span
+              >
+              <h4
+                id="reportEmpRole"
+                class="text-lg font-bold text-gray-800 mb-2"
+              >
+                Store Manager / CEO
+              </h4>
+              <p
+                id="reportEmpDesc"
+                class="text-xs text-gray-600 leading-relaxed"
+              >
+                Bold, imaginative and strong-willed leaders, always finding a
+                way.
+              </p>
+            </div>
+            <div class="border-t border-gray-100 pt-3">
+              <span
+                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1"
+                >Key Traits</span
+              >
+              <div id="reportEmpTraits" class="flex flex-wrap gap-1.5">
+                <!-- populated dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. HR MANAGER DASHBOARD VIEW -->
+      <div id="hrView" class="hidden w-full max-w-6xl py-6 space-y-8">
+        <div
+          class="flex flex-col md:flex-row md:items-center justify-between gap-4"
+        >
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">
+              HR Manager Dashboard
+            </h1>
+            <p class="text-xs text-gray-500">
+              Management dashboard showing team KPI cards, MBTI distribution
+              donut chart, style frequency bar chart, and employee records
+              table.
+            </p>
+          </div>
+          <button
+            onclick="exportTableCSV()"
+            class="inline-flex items-center gap-2 bg-gradient-to-r from-[#D95383] to-[#F29C79] text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-md hover:opacity-95 transition cursor-pointer self-start"
+          >
+            📥 Export CSV
+          </button>
+        </div>
+
+        <!-- KPI Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div
+            class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100 border-l-4 border-l-[#D95383]"
+          >
+            <span class="text-2xl font-black text-[#D95383]" id="hrTotalCount"
+              >5</span
+            >
+            <span
+              class="text-xs text-gray-400 block mt-1 uppercase font-semibold"
+              >Total Assessments</span
+            >
+          </div>
+          <div
+            class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100 border-l-4 border-l-[#F29C79]"
+          >
+            <span
+              class="text-2xl font-black text-gray-800"
+              id="hrMostCommonType"
+              >ENTJ</span
+            >
+            <span
+              class="text-xs text-gray-400 block mt-1 uppercase font-semibold"
+              >Most Common Type</span
+            >
+          </div>
+          <div
+            class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100 border-l-4 border-l-green-500"
+          >
+            <span class="text-2xl font-black text-green-600">35 sec</span>
+            <span
+              class="text-xs text-gray-400 block mt-1 uppercase font-semibold"
+              >Avg Completion Time</span
+            >
+          </div>
+          <div
+            class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100 border-l-4 border-l-purple-500"
+          >
+            <span class="text-2xl font-black text-purple-600">0</span>
+            <span
+              class="text-xs text-gray-400 block mt-1 uppercase font-semibold"
+              >Pending Assessments</span
+            >
+          </div>
+        </div>
+
+        <!-- Charts Section: Donut Chart & Bar Chart -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Donut Chart (MBTI Type Distribution) -->
+          <div
+            class="lg:col-span-6 bg-white p-6 rounded-3xl shadow-sm border border-pink-100 flex flex-col justify-between"
+          >
+            <h3 class="font-bold text-sm text-gray-900 mb-4">
+              MBTI Type Distribution — Team
+            </h3>
+            <div
+              class="flex flex-col sm:flex-row items-center justify-center gap-6 my-auto"
+            >
+              <div
+                class="relative w-40 h-40 rounded-full flex items-center justify-center shadow-inner"
+                style="
+                  background: conic-gradient(
+                    #d95383 0% 40%,
+                    #f29c79 40% 60%,
+                    #73bba3 60% 80%,
+                    #9b7ebd 80% 100%
+                  );
+                "
+              >
+                <div
+                  class="w-24 h-24 bg-white rounded-full flex flex-col items-center justify-center shadow"
+                >
+                  <span class="text-xs text-gray-400 font-semibold">Total</span>
+                  <span
+                    id="chartTotalBadge"
+                    class="text-lg font-bold text-gray-800"
+                    >5</span
+                  >
+                </div>
+              </div>
+              <div id="donutLegend" class="space-y-1.5 text-xs text-gray-600">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-3 h-3 rounded-sm inline-block"
+                    style="background-color: #d95383"
+                  ></span
+                  ><span class="font-semibold">ENTJ</span> - 2 (40%)
+                </div>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-3 h-3 rounded-sm inline-block"
+                    style="background-color: #f29c79"
+                  ></span
+                  ><span class="font-semibold">ISTJ</span> - 1 (20%)
+                </div>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-3 h-3 rounded-sm inline-block"
+                    style="background-color: #73bba3"
+                  ></span
+                  ><span class="font-semibold">ENTP</span> - 1 (20%)
+                </div>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-3 h-3 rounded-sm inline-block"
+                    style="background-color: #9b7ebd"
+                  ></span
+                  ><span class="font-semibold">INTP</span> - 1 (20%)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bar Chart (Decision-Maker Style Frequency) -->
+          <div
+            class="lg:col-span-6 bg-white p-6 rounded-3xl shadow-sm border border-pink-100 flex flex-col justify-between"
+          >
+            <h3 class="font-bold text-sm text-gray-900 mb-4">
+              Decision-Maker Style Frequency
+            </h3>
+            <div
+              id="barChartContainer"
+              class="flex items-end justify-around gap-2 h-48 pt-6 pb-2 px-4 border-b border-gray-100"
+            >
+              <div class="flex flex-col items-center h-full justify-end w-12">
+                <span class="text-[10px] font-bold text-gray-600 mb-1">2</span>
+                <div
+                  class="w-full rounded-t-lg bg-[#D95383]"
+                  style="height: 100%"
+                ></div>
+              </div>
+              <div class="flex flex-col items-center h-full justify-end w-12">
+                <span class="text-[10px] font-bold text-gray-600 mb-1">1</span>
+                <div
+                  class="w-full rounded-t-lg bg-[#F29C79]"
+                  style="height: 50%"
+                ></div>
+              </div>
+              <div class="flex flex-col items-center h-full justify-end w-12">
+                <span class="text-[10px] font-bold text-gray-600 mb-1">1</span>
+                <div
+                  class="w-full rounded-t-lg bg-[#73BBA3]"
+                  style="height: 50%"
+                ></div>
+              </div>
+              <div class="flex flex-col items-center h-full justify-end w-12">
+                <span class="text-[10px] font-bold text-gray-600 mb-1">1</span>
+                <div
+                  class="w-full rounded-t-lg bg-[#9B7EBD]"
+                  style="height: 50%"
+                ></div>
+              </div>
+            </div>
+            <div
+              class="flex justify-around text-[10px] font-semibold text-gray-500 mt-2 text-center"
+              id="barChartLabels"
+            >
+              <div class="w-16 truncate">The Commander</div>
+              <div class="w-16 truncate">The Logistician</div>
+              <div class="w-16 truncate">The Debater</div>
+              <div class="w-16 truncate">The Logician</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Employee Assessment Records Table with Filter / Search Bar -->
+        <div
+          class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 space-y-4"
+        >
+          <div
+            class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+          >
+            <div>
+              <h3 class="font-bold text-sm text-gray-900">
+                Employee Assessment Records
+              </h3>
+              <p class="text-[11px] text-gray-400">
+                Click any row to inspect details or use filters to narrow
+                results.
+              </p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+              <input
+                type="text"
+                id="tableSearchInput"
+                onkeyup="filterEmployeeTable()"
+                placeholder="Search by name..."
+                class="px-3 py-2 text-xs bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D95383] outline-none w-full sm:w-48"
+              />
+              <select
+                id="tableFilterSelect"
+                onchange="filterEmployeeTable()"
+                class="px-3 py-2 text-xs bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#D95383] outline-none text-gray-700 w-full sm:w-40"
+              >
+                <option value="">All Departments</option>
+                <option value="E-Commerce">E-Commerce</option>
+                <option value="Strategy">Strategy</option>
+                <option value="Operations">Operations</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Technology">Technology</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="text-gray-400 border-b border-gray-100 pb-2">
+                  <th class="pb-3 font-semibold">Name</th>
+                  <th class="pb-3 font-semibold">Department</th>
+                  <th class="pb-3 font-semibold">MBTI Type</th>
+                  <th class="pb-3 font-semibold">Decision Style</th>
+                  <th class="pb-3 font-semibold">Recommended Role</th>
+                  <th class="pb-3 font-semibold">Test Date</th>
+                </tr>
+              </thead>
+              <tbody
+                id="hrTableBody"
+                class="divide-y divide-gray-50 text-gray-700"
+              >
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. SYSTEM ADMIN VIEW -->
+      <div id="adminView" class="hidden w-full max-w-6xl py-6 space-y-8">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">
+            System Administration
+          </h1>
+          <p class="text-xs text-gray-500">
+            Manage platform users, test questions, MBTI content, and decision
+            knowledge rules. (Accessible by HR Manager)
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Manage Users -->
+          <div
+            class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 space-y-4"
+          >
+            <div class="flex justify-between items-center">
+              <h3 class="font-bold text-sm text-gray-900">👥 Manage Users</h3>
+              <button
+                onclick="openAddUserModal()"
+                class="px-3 py-1.5 bg-pink-50 text-[#D95383] rounded-xl text-xs font-bold hover:bg-pink-100 transition cursor-pointer"
+              >
+                + Add User
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">
+              Configure user access roles, departments, and account permissions
+              across the platform.
+            </p>
+            <div
+              id="adminUserList"
+              class="space-y-2 max-h-40 overflow-y-auto pr-1"
+            >
+              <div
+                class="bg-gray-50 p-3 rounded-xl text-xs text-gray-700 flex justify-between items-center"
+              >
+                <span>Supasri Seekane (HR Manager)</span>
+                <span class="text-green-600 font-semibold">Active</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Manage Test Questions -->
+          <div
+            class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 space-y-4"
+          >
+            <div class="flex justify-between items-center">
+              <h3 class="font-bold text-sm text-gray-900">
+                📋 Manage Test Questions
+              </h3>
+              <button
+                onclick="openEditQuestionsModal()"
+                class="px-3 py-1.5 bg-pink-50 text-[#D95383] rounded-xl text-xs font-bold hover:bg-pink-100 transition cursor-pointer"
+              >
+                Edit Bank
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">
+              Maintain the 12 psychometric question items categorized across 4
+              MBTI dimensions.
+            </p>
+            <div
+              class="bg-gray-50 p-3 rounded-xl text-xs text-gray-700 flex justify-between items-center"
+            >
+              <span
+                >Total Active Questions: <span id="adminQCount">12</span> Items
+                (3 per dimension)</span
+              >
+              <span
+                class="text-indigo-600 font-semibold cursor-pointer"
+                onclick="openEditQuestionsModal()"
+                >Configure</span
+              >
+            </div>
+          </div>
+
+          <!-- Manage MBTI Content -->
+          <div
+            class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 space-y-4"
+          >
+            <div class="flex justify-between items-center">
+              <h3 class="font-bold text-sm text-gray-900">
+                📚 Manage MBTI Content
+              </h3>
+              <button
+                onclick="updateMbtiHubContent()"
+                class="px-3 py-1.5 bg-pink-50 text-[#D95383] rounded-xl text-xs font-bold hover:bg-pink-100 transition cursor-pointer"
+              >
+                Update Hub
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">
+              Edit learning articles and summaries displayed in the Learn MBTI
+              knowledge hub portal.
+            </p>
+            <div
+              class="bg-gray-50 p-3 rounded-xl text-xs text-gray-700 flex justify-between items-center"
+            >
+              <span id="mbtiHubStatusText"
+                >Status: Published & Synchronized</span
+              >
+              <span class="text-green-600 font-semibold">Live</span>
+            </div>
+          </div>
+
+          <!-- Manage Decision Rules -->
+          <div
+            class="bg-white p-6 rounded-3xl shadow-sm border border-pink-100 space-y-4"
+          >
+            <div class="flex justify-between items-center">
+              <h3 class="font-bold text-sm text-gray-900">
+                ⚙️ Manage Decision Rules
+              </h3>
+              <button
+                onclick="openDecisionRulesModal()"
+                class="px-3 py-1.5 bg-pink-50 text-[#D95383] rounded-xl text-xs font-bold hover:bg-pink-100 transition cursor-pointer"
+              >
+                Configure Rules
+              </button>
+            </div>
+            <p class="text-xs text-gray-500">
+              Modify IF-THEN mapping logic connecting MBTI personality outcomes
+              to e-commerce job roles.
+            </p>
+            <div
+              class="bg-gray-50 p-3 rounded-xl text-xs text-gray-700 flex justify-between items-center"
+            >
+              <span>Active Knowledge Rules: 16 Mapping Rules</span>
+              <span
+                class="text-purple-600 font-semibold cursor-pointer"
+                onclick="openDecisionRulesModal()"
+                >View Rules</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- MODALS FOR ADMIN ACTIONS -->
+    <div
+      id="adminModal"
+      class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 border border-pink-100"
+      >
+        <div
+          class="flex justify-between items-center border-b border-gray-100 pb-3"
+        >
+          <h3 id="modalTitle" class="font-bold text-sm text-gray-900">
+            Modal Title
+          </h3>
+          <button
+            onclick="closeAdminModal()"
+            class="text-gray-400 hover:text-gray-600 font-bold text-sm"
+          >
+            ✕
+          </button>
+        </div>
+        <div id="modalBody" class="space-y-3 text-xs text-gray-600">
+          <!-- Content injected dynamically -->
+        </div>
+        <div class="flex justify-end gap-2 pt-2 border-t border-gray-100">
+          <button
+            onclick="closeAdminModal()"
+            class="px-4 py-2 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition"
+          >
+            Cancel
+          </button>
+          <button
+            id="modalActionBtn"
+            onclick="saveModalAction()"
+            class="px-4 py-2 bg-[#D95383] text-white font-bold rounded-xl hover:opacity-95 transition"
+          >
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentUser = {
+        firstName: 'Supasri',
+        lastName: 'Seekane',
+        email: 'supasri@mahidol.ac.th',
+        role: 'HR Manager',
+        mbti: 'ENTJ',
+      };
+      let gridImageUrl = 'https://i.ibb.co/v6kX3xNt/image.png';
+
+      const mbtiGridCoords = {
+        INTJ: { x: '0%', y: '0%' },
+        INTP: { x: '33.33%', y: '0%' },
+        ENTJ: { x: '66.66%', y: '0%' },
+        ENTP: { x: '100%', y: '0%' },
+        INFJ: { x: '0%', y: '33.33%' },
+        INFP: { x: '33.33%', y: '33.33%' },
+        ENFJ: { x: '66.66%', y: '33.33%' },
+        ENFP: { x: '100%', y: '33.33%' },
+        ISTJ: { x: '0%', y: '66.66%' },
+        ISFJ: { x: '33.33%', y: '66.66%' },
+        ESTJ: { x: '66.66%', y: '66.66%' },
+        ESFJ: { x: '100%', y: '66.66%' },
+        ISTP: { x: '0%', y: '100%' },
+        ISFP: { x: '33.33%', y: '100%' },
+        ESTP: { x: '66.66%', y: '100%' },
+        ESFP: { x: '100%', y: '100%' },
+      };
+
+      const questions = [
+        {
+          dim: 'EI',
+          part: 'PART 1 - ENERGY (E/I)',
+          text: 'How do you prefer to spend your workday?',
+          optA: 'Talk to customers on the floor',
+          optB: 'Work quietly on my own',
+        },
+        {
+          dim: 'EI',
+          part: 'PART 1 - ENERGY (E/I)',
+          text: 'When solving a complex problem, you prefer:',
+          optA: 'Team brainstorming sessions',
+          optB: 'Independent deep research',
+        },
+        {
+          dim: 'EI',
+          part: 'PART 1 - ENERGY (E/I)',
+          text: 'Your ideal office environment is:',
+          optA: 'An open-plan collaborative office',
+          optB: 'A private quiet workspace',
+        },
+
+        {
+          dim: 'SN',
+          part: 'PART 2 - INFORMATION (S/N)',
+          text: 'When planning inventory, you rely more on:',
+          optA: 'Look at real past sales data',
+          optB: 'Guess future market trends',
+        },
+        {
+          dim: 'SN',
+          part: 'PART 2 - INFORMATION (S/N)',
+          text: 'Your primary focus in projects is to:',
+          optA: 'Focus on current concrete facts',
+          optB: 'Imagine innovative possibilities',
+        },
+        {
+          dim: 'SN',
+          part: 'PART 2 - INFORMATION (S/N)',
+          text: 'When solving issues, you tend to:',
+          optA: 'Implement practical quick solutions',
+          optB: 'Brainstorm creative new ideas',
+        },
+
+        {
+          dim: 'TF',
+          part: 'PART 3 - DECISIONS (T/F)',
+          text: 'When evaluating a campaign budget, you use:',
+          optA: 'Strict profit numbers & ROI',
+          optB: 'Consider team morale & feelings',
+        },
+        {
+          dim: 'TF',
+          part: 'PART 3 - DECISIONS (T/F)',
+          text: 'In team conflicts, you prioritize:',
+          optA: 'Objective analytical truth',
+          optB: 'Harmony and emotional support',
+        },
+        {
+          dim: 'TF',
+          part: 'PART 3 - DECISIONS (T/F)',
+          text: 'When managing rules, you usually:',
+          optA: 'Enforce firm standardized policies',
+          optB: 'Make flexible personal accommodations',
+        },
+
+        {
+          dim: 'JP',
+          part: 'PART 4 - LIFESTYLE (J/P)',
+          text: 'How do you organize your weekly schedule?',
+          optA: 'Plan and schedule work early',
+          optB: 'Wait and see how things go',
+        },
+        {
+          dim: 'JP',
+          part: 'PART 4 - LIFESTYLE (J/P)',
+          text: 'When dealing with project milestones:',
+          optA: 'Follow strict target deadlines',
+          optB: 'Prefer flexible open schedules',
+        },
+        {
+          dim: 'JP',
+          part: 'PART 4 - LIFESTYLE (J/P)',
+          text: 'When handling multiple assignments:',
+          optA: 'Complete tasks sequentially',
+          optB: 'Multitask and switch dynamically',
+        },
+      ];
+
+      let currentQuestionIndex = 0;
+      let userAnswers = new Array(12).fill(null);
+
+      const mbtiData = {
+        INTJ: {
+          name: 'The Architect',
+          role: 'Business Planner',
+          cat: 'Analysts',
+          color: '#9B7EBD',
+          desc: 'Imaginative and strategic thinkers, with a plan for everything.',
+          chars: ['Strategic', 'Independent', 'Decisive', 'Analytical'],
+        },
+        INTP: {
+          name: 'The Logician',
+          role: 'IT Manager',
+          cat: 'Analysts',
+          color: '#9B7EBD',
+          desc: 'Innovative inventors with an unquenchable thirst for knowledge.',
+          chars: ['Curious', 'Objective', 'Logical', 'Abstract'],
+        },
+        ENTJ: {
+          name: 'The Commander',
+          role: 'Store Manager / CEO',
+          cat: 'Analysts',
+          color: '#9B7EBD',
+          desc: 'Bold, imaginative and strong-willed leaders, always finding a way.',
+          chars: ['Efficient', 'Energetic', 'Self-Confident', 'Strategic'],
+        },
+        ENTP: {
+          name: 'The Debater',
+          role: 'Marketing Manager',
+          cat: 'Analysts',
+          color: '#9B7EBD',
+          desc: 'Smart and curious thinkers who cannot resist an intellectual challenge.',
+          chars: ['Quick-Witted', 'Charismatic', 'Original', 'Versatile'],
+        },
+
+        INFJ: {
+          name: 'The Advocate',
+          role: 'Brand Manager',
+          cat: 'Diplomats',
+          color: '#73BBA3',
+          desc: 'Quiet and mystical, yet very inspiring and tireless idealists.',
+          chars: ['Insightful', 'Principled', 'Creative', 'Passionate'],
+        },
+        INFP: {
+          name: 'The Mediator',
+          role: 'Product Buyer',
+          cat: 'Diplomats',
+          color: '#73BBA3',
+          desc: 'Poetic, kind and altruistic people, always eager to help a good cause.',
+          chars: ['Idealistic', 'Empathetic', 'Open-Minded', 'Creative'],
+        },
+        ENFJ: {
+          name: 'The Protagonist',
+          role: 'HR Manager',
+          cat: 'Diplomats',
+          color: '#73BBA3',
+          desc: 'Charismatic and inspiring leaders, able to mesmerize their listeners.',
+          chars: ['Reliable', 'Charismatic', 'Altruistic', 'Natural Leader'],
+        },
+        ENFP: {
+          name: 'The Campaigner',
+          role: 'Ad Creator',
+          cat: 'Diplomats',
+          color: '#73BBA3',
+          desc: 'Enthusiastic, creative and sociable free spirits, who can always find a reason to smile.',
+          chars: ['Enthusiastic', 'Sociable', 'Spontaneous', 'Creative'],
+        },
+
+        ISTJ: {
+          name: 'The Logistician',
+          role: 'Data Analyst',
+          cat: 'Sentinels',
+          color: '#7CB9E8',
+          desc: 'Practical and fact-minded individuals, whose reliability cannot be doubted.',
+          chars: ['Honest', 'Direct', 'Duty-Bound', 'Calm'],
+        },
+        ISFJ: {
+          name: 'The Defender',
+          role: 'Customer Service',
+          cat: 'Sentinels',
+          color: '#7CB9E8',
+          desc: 'Dedicated and warm protectors, always ready to defend their loved ones.',
+          chars: ['Supportive', 'Reliable', 'Patient', 'Observant'],
+        },
+        ESTJ: {
+          name: 'The Executive',
+          role: 'Stock Manager',
+          cat: 'Sentinels',
+          color: '#7CB9E8',
+          desc: 'Excellent administrators, unsurpassed at managing things—or people.',
+          chars: ['Dedicated', 'Strong-Willed', 'Direct', 'Organizer'],
+        },
+        ESFJ: {
+          name: 'The Consul',
+          role: 'Community Manager',
+          cat: 'Sentinels',
+          color: '#7CB9E8',
+          desc: 'Extraordinarily caring, social and popular people, always eager to help.',
+          chars: ['Caring', 'Social', 'Popular', 'Warm-Hearted'],
+        },
+
+        ISTP: {
+          name: 'The Virtuoso',
+          role: 'Tech Support',
+          cat: 'Explorers',
+          color: '#F4C753',
+          desc: 'Bold and practical experimenters, masters of all kinds of tools.',
+          chars: ['Optimistic', 'Practical', 'Spontaneous', 'Rational'],
+        },
+        ISFP: {
+          name: 'The Adventurer',
+          role: 'Visual Merchandiser',
+          cat: 'Explorers',
+          color: '#F4C753',
+          desc: 'Flexible and charming artists, always ready to explore something new.',
+          chars: ['Artistic', 'Gentle', 'Flexible', 'Observant'],
+        },
+        ESTP: {
+          name: 'The Entrepreneur',
+          role: 'Sales Manager',
+          cat: 'Explorers',
+          color: '#F4C753',
+          desc: 'Smart, energetic and very perceptive people, who truly enjoy living on the edge.',
+          chars: ['Bold', 'Rational', 'Original', 'Perceptive'],
+        },
+        ESFP: {
+          name: 'The Entertainer',
+          role: 'Social Media Live Seller',
+          cat: 'Explorers',
+          color: '#F4C753',
+          desc: 'Spontaneous, energetic and enthusiastic people—life is never boring around them.',
+          chars: ['Bold', 'Original', 'Showman', 'Practical'],
+        },
+      };
+
+      let employeeRecords = [
+        {
+          name: 'Supasri Seekane',
+          dept: 'E-Commerce',
+          mbti: 'ENTJ',
+          style: 'The Commander',
+          role: 'Store Manager / CEO',
+          date: '23 Sep 2026',
+        },
+        {
+          name: 'Ayumu Sakurai',
+          dept: 'Strategy',
+          mbti: 'ENTJ',
+          style: 'The Commander',
+          role: 'Store Manager / CEO',
+          date: '13 Sep 2026',
+        },
+        {
+          name: 'Junrui Mao',
+          dept: 'Operations',
+          mbti: 'ISTJ',
+          style: 'The Logistician',
+          role: 'Data Analyst',
+          date: '12 Sep 2026',
+        },
+        {
+          name: 'Yuetong Guo',
+          dept: 'Marketing',
+          mbti: 'ENTP',
+          style: 'The Debater',
+          role: 'Marketing Manager',
+          date: '12 Sep 2026',
+        },
+        {
+          name: 'Nattaporn Srisuk',
+          dept: 'Technology',
+          mbti: 'INTP',
+          style: 'The Logician',
+          role: 'IT Manager',
+          date: '10 Sep 2026',
+        },
+      ];
+
+      let systemUsers = [
+        {
+          name: 'Supasri Seekane',
+          email: 'supasri@mahidol.ac.th',
+          role: 'HR Manager',
+          status: 'Active',
+        },
+        {
+          name: 'Ayumu Sakurai',
+          email: 'ayumu@mahidol.ac.th',
+          role: 'Candidate',
+          status: 'Active',
+        },
+      ];
+
+      function navigate(view) {
+        document.getElementById('authContainer').classList.add('hidden');
+        document.getElementById('homeView').classList.add('hidden');
+        document.getElementById('learnView').classList.add('hidden');
+        document.getElementById('testView').classList.add('hidden');
+        document.getElementById('resultView').classList.add('hidden');
+        document.getElementById('fullReportView').classList.add('hidden');
+        document.getElementById('hrView').classList.add('hidden');
+        document.getElementById('adminView').classList.add('hidden');
+        document.getElementById('navbar').classList.remove('hidden');
+
+        if (view === 'auth') {
+          document.getElementById('authContainer').classList.remove('hidden');
+          document.getElementById('navbar').classList.add('hidden');
+        } else if (view === 'home') {
+          document.getElementById('homeView').classList.remove('hidden');
+        } else if (view === 'learn') {
+          document.getElementById('learnView').classList.remove('hidden');
+        } else if (view === 'test') {
+          document.getElementById('testView').classList.remove('hidden');
+          renderQuestion();
+        } else if (view === 'result') {
+          document.getElementById('resultView').classList.remove('hidden');
+          calculateAndRenderResult();
+        } else if (view === 'fullReport') {
+          document.getElementById('fullReportView').classList.remove('hidden');
+        } else if (view === 'hr') {
+          document.getElementById('hrView').classList.remove('hidden');
+          renderHrDashboard();
+        } else if (view === 'admin') {
+          document.getElementById('adminView').classList.remove('hidden');
+        }
+      }
+
+      function toggleAuthMode(mode) {
+        if (mode === 'register') {
+          document.getElementById('loginView').classList.add('hidden');
+          document.getElementById('registerView').classList.remove('hidden');
+        } else {
+          document.getElementById('registerView').classList.add('hidden');
+          document.getElementById('loginView').classList.remove('hidden');
+        }
+      }
+
+      function handleLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const role = document.getElementById('loginRoleSelect').value;
+        if (!email.endsWith('@mahidol.ac.th')) {
+          document.getElementById('loginEmailErr').classList.remove('hidden');
+          return;
+        }
+        document.getElementById('loginEmailErr').classList.add('hidden');
+        currentUser.email = email;
+        currentUser.role = role;
+        updateUserProfileUI();
+        navigate('home');
+      }
+
+      function handleRegister(event) {
+        event.preventDefault();
+        const name = document.getElementById('regName').value.trim();
+        const email = document.getElementById('regEmail').value;
+        const pass = document.getElementById('regPass').value;
+        let valid = true;
+
+        if (!email.endsWith('@mahidol.ac.th')) {
+          document.getElementById('regEmailErr').classList.remove('hidden');
+          valid = false;
+        } else {
+          document.getElementById('regEmailErr').classList.add('hidden');
+        }
+
+        const passRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (!passRegex.test(pass)) {
+          document.getElementById('regPassErr').classList.remove('hidden');
+          valid = false;
+        } else {
+          document.getElementById('regPassErr').classList.add('hidden');
+        }
+
+        if (valid) {
+          const parts = name.split(' ');
+          currentUser.firstName = parts[0] || 'User';
+          currentUser.lastName = parts.slice(1).join(' ') || '';
+          currentUser.email = email;
+          currentUser.role = 'Candidate';
+          updateUserProfileUI();
+          alert('Registration successful! Welcome to PersonaCommerce.');
+          navigate('home');
+        }
+      }
+
+      function updateUserProfileUI() {
+        const fullName =
+          `${currentUser.firstName} ${currentUser.lastName}`.trim();
+        document.getElementById('navUserName').innerText = fullName;
+        document.getElementById(
+          'welcomeHeading'
+        ).innerText = `Hi, ${fullName} 👋`;
+        document.getElementById('navUserRoleBadge').innerText =
+          currentUser.role;
+
+        const initials =
+          (currentUser.firstName[0] || '') + (currentUser.lastName[0] || '');
+        document.getElementById('userAvatar').innerText =
+          initials.toUpperCase();
+
+        const hrBtn = document.getElementById('navHrBtn');
+        const adminBtn = document.getElementById('navAdminBtn');
+        if (currentUser.role === 'HR Manager') {
+          hrBtn.classList.remove('hidden');
+          adminBtn.classList.remove('hidden');
+        } else {
+          hrBtn.classList.add('hidden');
+          adminBtn.classList.add('hidden');
+        }
+      }
+
+      function toggleDropdown() {
+        document.getElementById('userDropdown').classList.toggle('hidden');
+      }
+
+      function logout() {
+        document.getElementById('userDropdown').classList.add('hidden');
+        navigate('auth');
+      }
+
+      function renderQuestion() {
+        const q = questions[currentQuestionIndex];
+        const percent = Math.round(((currentQuestionIndex + 1) / 12) * 100);
+
+        document.getElementById('questionCountText').innerText = `Question ${
+          currentQuestionIndex + 1
+        } of 12`;
+        document.getElementById(
+          'progressPercentText'
+        ).innerText = `${percent}%`;
+        document.getElementById('progressBar').style.width = `${percent}%`;
+        document.getElementById('questionDimensionBadge').innerText = q.part;
+        document.getElementById('questionTitle').innerText = q.text;
+        document.getElementById('optionAText').innerText = q.optA;
+        document.getElementById('optionBText').innerText = q.optB;
+
+        const currentAns = userAnswers[currentQuestionIndex];
+        document.getElementById(
+          'optionABtn'
+        ).className = `w-full text-left p-4 rounded-2xl border-2 transition flex items-center justify-between ${
+          currentAns === 'A' ? 'border-[#D95383] bg-pink-50' : 'border-gray-100'
+        }`;
+        document.getElementById(
+          'optionBBtn'
+        ).className = `w-full text-left p-4 rounded-2xl border-2 transition flex items-center justify-between ${
+          currentAns === 'B' ? 'border-[#D95383] bg-pink-50' : 'border-gray-100'
+        }`;
+
+        document.getElementById('prevBtn').style.display =
+          currentQuestionIndex === 0 ? 'none' : 'block';
+        document.getElementById('nextBtn').innerText =
+          currentQuestionIndex === 11 ? 'Submit Test' : 'Next →';
+      }
+
+      function selectOption(choice) {
+        userAnswers[currentQuestionIndex] = choice;
+        renderQuestion();
+      }
+
+      function nextQuestion() {
+        if (!userAnswers[currentQuestionIndex]) {
+          alert('Please select an option before proceeding.');
+          return;
+        }
+        if (currentQuestionIndex < 11) {
+          currentQuestionIndex++;
+          renderQuestion();
+        } else {
+          navigate('result');
+        }
+      }
+
+      function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+          currentQuestionIndex--;
+          renderQuestion();
+        }
+      }
+
+      function calculateAndRenderResult() {
+        let scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+        userAnswers.forEach((ans, idx) => {
+          if (idx < 3) {
+            ans === 'A' ? scores.E++ : scores.I++;
+          } else if (idx < 6) {
+            ans === 'A' ? scores.S++ : scores.N++;
+          } else if (idx < 9) {
+            ans === 'A' ? scores.T++ : scores.F++;
+          } else {
+            ans === 'A' ? scores.J++ : scores.P++;
+          }
+        });
+
+        const type =
+          (scores.E >= scores.I ? 'E' : 'I') +
+          (scores.S >= scores.N ? 'S' : 'N') +
+          (scores.T >= scores.F ? 'T' : 'F') +
+          (scores.J >= scores.P ? 'J' : 'P');
+
+        currentUser.mbti = type;
+        const data = mbtiData[type] || mbtiData['ENTJ'];
+
+        document.getElementById('resultMbtiTitle').innerText = type;
+        document.getElementById('resultSubtitle').innerText = data.name;
+        document.getElementById('resultRoleTitle').innerText = data.name;
+        document.getElementById('resultRoleName').innerText = data.role;
+        document.getElementById('resultRoleDesc').innerText = data.desc;
+        document.getElementById('resultHeroCard').style.backgroundColor =
+          data.color;
+
+        const avatarDiv = document.getElementById('resultCharacterAvatar');
+        const coord = mbtiGridCoords[type] || { x: '66.66%', y: '0%' };
+        avatarDiv.style.backgroundImage = `url('${gridImageUrl}')`;
+        avatarDiv.style.backgroundSize = '400% 400%';
+        avatarDiv.style.backgroundPosition = `${coord.x} ${coord.y}`;
+
+        const traitNames = {
+          E: 'Extraverted',
+          I: 'Introverted',
+          S: 'Sensing',
+          N: 'Intuition',
+          T: 'Thinking',
+          F: 'Feeling',
+          J: 'Judging',
+          P: 'Perceiving',
+        };
+        document.getElementById('trait1').innerText = traitNames[type[0]];
+        document.getElementById('trait2').innerText = traitNames[type[1]];
+        document.getElementById('trait3').innerText = traitNames[type[2]];
+        document.getElementById('trait4').innerText = traitNames[type[3]];
+
+        const charContainer = document.getElementById(
+          'keyCharacteristicsContainer'
+        );
+        charContainer.innerHTML = data.chars
+          .map(
+            (c) =>
+              `<span class="px-3 py-1 bg-pink-50 text-[#D95383] rounded-full text-xs font-medium">${c}</span>`
+          )
+          .join('');
+
+        const calcPct = (a) => Math.round((a / 3) * 100);
+        const ePct = calcPct(scores.E);
+        const sPct = calcPct(scores.S);
+        const tPct = calcPct(scores.T);
+        const jPct = calcPct(scores.J);
+
+        document.getElementById(
+          'scoreEText'
+        ).innerText = `E - Extraversion ${ePct}%`;
+        document.getElementById('scoreIText').innerText = `${
+          100 - ePct
+        }% Introversion - I`;
+        const barEI = document.getElementById('barEI');
+        if (ePct >= 50) {
+          barEI.style.left = '0%';
+          barEI.style.width = `${ePct}%`;
+        } else {
+          barEI.style.left = `${ePct}%`;
+          barEI.style.width = `${100 - ePct}%`;
+        }
+
+        document.getElementById(
+          'scoreSText'
+        ).innerText = `S - Sensing ${sPct}%`;
+        document.getElementById('scoreNText').innerText = `${
+          100 - sPct
+        }% Intuition - N`;
+        const barSN = document.getElementById('barSN');
+        if (sPct >= 50) {
+          barSN.style.left = '0%';
+          barSN.style.width = `${sPct}%`;
+        } else {
+          barSN.style.left = `${sPct}%`;
+          barSN.style.width = `${100 - sPct}%`;
+        }
+
+        document.getElementById(
+          'scoreTText'
+        ).innerText = `T - Thinking ${tPct}%`;
+        document.getElementById('scoreFText').innerText = `${
+          100 - tPct
+        }% Feeling - F`;
+        const barTF = document.getElementById('barTF');
+        if (tPct >= 50) {
+          barTF.style.left = '0%';
+          barTF.style.width = `${tPct}%`;
+        } else {
+          barTF.style.left = `${tPct}%`;
+          barTF.style.width = `${100 - tPct}%`;
+        }
+
+        document.getElementById(
+          'scoreJText'
+        ).innerText = `J - Judging ${jPct}%`;
+        document.getElementById('scorePText').innerText = `${
+          100 - jPct
+        }% Perceiving - P`;
+        const barJP = document.getElementById('barJP');
+        if (jPct >= 50) {
+          barJP.style.left = '0%';
+          barJP.style.width = `${jPct}%`;
+        } else {
+          barJP.style.left = `${jPct}%`;
+          barJP.style.width = `${100 - jPct}%`;
+        }
+
+        const fullName =
+          `${currentUser.firstName} ${currentUser.lastName}`.trim();
+        const existingIndex = employeeRecords.findIndex(
+          (e) => e.name === fullName
+        );
+        const newRecord = {
+          name: fullName,
+          dept: 'E-Commerce',
+          mbti: type,
+          style: data.name,
+          role: data.role,
+          date: '23 Sep 2026',
+        };
+
+        if (existingIndex >= 0) {
+          employeeRecords[existingIndex] = newRecord;
+        } else {
+          employeeRecords.unshift(newRecord);
+        }
+      }
+
+      function renderHrDashboard() {
+        const totalCount = employeeRecords.length;
+        document.getElementById('hrTotalCount').innerText = totalCount;
+        document.getElementById('chartTotalBadge').innerText = totalCount;
+        filterEmployeeTable();
+      }
+
+      function filterEmployeeTable() {
+        const query = document
+          .getElementById('tableSearchInput')
+          .value.toLowerCase();
+        const deptFilter = document.getElementById('tableFilterSelect').value;
+
+        const filtered = employeeRecords.filter((emp) => {
+          const matchesName = emp.name.toLowerCase().includes(query);
+          const matchesDept = deptFilter === '' || emp.dept === deptFilter;
+          return matchesName && matchesDept;
+        });
+
+        const tbody = document.getElementById('hrTableBody');
+        tbody.innerHTML = filtered
+          .map(
+            (emp) => `
+        <tr class="hover:bg-pink-50/50 transition cursor-pointer" onclick="viewEmployeeFullReport('${emp.name}')">
+          <td class="py-3 font-semibold text-gray-900">${emp.name}</td>
+          <td class="py-3 text-gray-600">${emp.dept}</td>
+          <td class="py-3"><span class="px-2.5 py-1 bg-pink-100 text-[#D95383] font-bold rounded-lg">${emp.mbti}</span></td>
+          <td class="py-3"><span class="px-2.5 py-1 bg-gray-100 text-gray-700 font-semibold rounded-lg">${emp.style}</span></td>
+          <td class="py-3 text-gray-600 font-medium">${emp.role}</td>
+          <td class="py-3 text-gray-400">${emp.date}</td>
+        </tr>
+      `
+          )
+          .join('');
+      }
+
+      function viewEmployeeFullReport(name) {
+        const emp = employeeRecords.find((e) => e.name === name);
+        if (!emp) return;
+        const data = mbtiData[emp.mbti] || mbtiData['ENTJ'];
+
+        document.getElementById('reportEmpName').innerText = emp.name;
+        document.getElementById(
+          'reportEmpMeta'
+        ).innerText = `Department: ${emp.dept} | Test Date: ${emp.date}`;
+        document.getElementById('reportEmpMbti').innerText = emp.mbti;
+        document.getElementById('reportEmpStyle').innerText = emp.style;
+        document.getElementById('reportEmpRole').innerText = emp.role;
+        document.getElementById('reportEmpDesc').innerText = data.desc;
+
+        const avatarDiv = document.getElementById('reportEmpAvatar');
+        const coord = mbtiGridCoords[emp.mbti] || { x: '66.66%', y: '0%' };
+        avatarDiv.style.backgroundImage = `url('${gridImageUrl}')`;
+        avatarDiv.style.backgroundSize = '400% 400%';
+        avatarDiv.style.backgroundPosition = `${coord.x} ${coord.y}`;
+
+        const traitContainer = document.getElementById('reportEmpTraits');
+        traitContainer.innerHTML = data.chars
+          .map(
+            (c) =>
+              `<span class="px-3 py-1 bg-pink-50 text-[#D95383] rounded-full text-xs font-medium">${c}</span>`
+          )
+          .join('');
+
+        navigate('fullReport');
+      }
+
+      function exportTableCSV() {
+        let csvContent =
+          'data:text/csv;charset=utf-8,Name,Department,MBTI Type,Decision Style,Recommended Role,Test Date\n';
+        employeeRecords.forEach((emp) => {
+          csvContent += `"${emp.name}","${emp.dept}","${emp.mbti}","${emp.style}","${emp.role}","${emp.date}"\n`;
+        });
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', 'employee_assessment_records.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      // Interactive Admin Actions Logic
+      let currentAdminAction = null;
+
+      function openAddUserModal() {
+        currentAdminAction = 'addUser';
+        document.getElementById('modalTitle').innerText =
+          '👥 Add New System User';
+        document.getElementById('modalBody').innerHTML = `
+        <div>
+          <label class="block font-semibold mb-1">Full Name</label>
+          <input type="text" id="newUserName" placeholder="John Doe" class="w-full px-3 py-2 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-[#D95383]" />
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Email (@mahidol.ac.th)</label>
+          <input type="email" id="newUserEmail" placeholder="john@mahidol.ac.th" class="w-full px-3 py-2 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-[#D95383]" />
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Role Permission</label>
+          <select id="newUserRole" class="w-full px-3 py-2 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-[#D95383]">
+            <option value="Candidate">Assessment Candidate</option>
+            <option value="HR Manager">HR Manager</option>
+          </select>
+        </div>
+      `;
+        document.getElementById('adminModal').classList.remove('hidden');
+      }
+
+      function openEditQuestionsModal() {
+        currentAdminAction = 'editQuestions';
+        document.getElementById('modalTitle').innerText =
+          '📋 Manage Test Questions Bank';
+        document.getElementById('modalBody').innerHTML = `
+        <p class="text-gray-500 mb-2">Total questions loaded: <strong>${
+          questions.length
+        }</strong> items across 4 dimensions.</p>
+        <div>
+          <label class="block font-semibold mb-1">Select Question Index (1 - 12)</label>
+          <select id="qSelectIndex" onchange="loadQuestionIntoInput()" class="w-full px-3 py-2 border border-gray-200 rounded-xl outline-none mb-2">
+            ${questions
+              .map(
+                (q, i) =>
+                  `<option value="${i}">Q${i + 1}:${q.text.substring(
+                    0,
+                    35
+                  )}...</option>`
+              )
+              .join('')}
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Edit Question Prompt</label>
+          <input type="text" id="qEditText" class="w-full px-3 py-2 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-[#D95383]" value="${
+            questions[0].text
+          }" />
+        </div>
+      `;
+        document.getElementById('adminModal').classList.remove('hidden');
+      }
+
+      function loadQuestionIntoInput() {
+        const idx = document.getElementById('qSelectIndex').value;
+        document.getElementById('qEditText').value = questions[idx].text;
+      }
+
+      function updateMbtiHubContent() {
+        document.getElementById('mbtiHubStatusText').innerText =
+          'Status: Successfully Refreshed & Synced (' +
+          new Date().toLocaleTimeString() +
+          ')';
+        alert(
+          'MBTI Learning Hub content has been successfully updated and published!'
+        );
+      }
+
+      function openDecisionRulesModal() {
+        currentAdminAction = 'editRules';
+        document.getElementById('modalTitle').innerText =
+          '⚙️ Configure IF-THEN Decision Rules';
+        document.getElementById('modalBody').innerHTML = `
+        <p class="text-gray-500 mb-2">Active Mapping Rules: 16 MBTI Personality Types to E-Commerce Management Roles.</p>
+        <div class="bg-gray-50 p-3 rounded-xl space-y-2 max-h-48 overflow-y-auto">
+          <div class="text-[11px] font-mono">IF MBTI == "ENTJ" THEN Style = "The Commander", Role = "Store Manager / CEO"</div>
+          <div class="text-[11px] font-mono">IF MBTI == "ISTJ" THEN Style = "The Logistician", Role = "Data Analyst"</div>
+          <div class="text-[11px] font-mono">IF MBTI == "ENTP" THEN Style = "The Debater", Role = "Marketing Manager"</div>
+          <div class="text-[11px] font-mono">IF MBTI == "INTP" THEN Style = "The Logician", Role = "IT Manager"</div>
+          <div class="text-[11px] font-mono">IF MBTI == "ISFP" THEN Style = "The Adventurer", Role = "Visual Merchandiser"</div>
+        </div>
+        <p class="text-[11px] text-green-600 font-semibold mt-1">✓ All 16 decision rules are fully active and verified.</p>
+      `;
+        document.getElementById('adminModal').classList.remove('hidden');
+      }
+
+      function closeAdminModal() {
+        document.getElementById('adminModal').classList.add('hidden');
+      }
+
+      function saveModalAction() {
+        if (currentAdminAction === 'addUser') {
+          const name = document.getElementById('newUserName').value.trim();
+          const email = document.getElementById('newUserEmail').value.trim();
+          const role = document.getElementById('newUserRole').value;
+          if (!name || !email) {
+            alert('Please fill in all fields.');
+            return;
+          }
+          systemUsers.push({ name, email, role, status: 'Active' });
+
+          // Render in admin list
+          const listEl = document.getElementById('adminUserList');
+          listEl.innerHTML += `
+          <div class="bg-gray-50 p-3 rounded-xl text-xs text-gray-700 flex justify-between items-center">
+            <span>${name} (${role})</span>
+            <span class="text-green-600 font-semibold">Active</span>
+          </div>
+        `;
+          alert(`User "${name}" added successfully!`);
+        } else if (currentAdminAction === 'editQuestions') {
+          const idx = document.getElementById('qSelectIndex').value;
+          const newText = document.getElementById('qEditText').value.trim();
+          if (newText) {
+            questions[idx].text = newText;
+            alert('Question updated successfully!');
+          }
+        }
+        closeAdminModal();
+      }
+    </script>
+  </body>
+</html>
